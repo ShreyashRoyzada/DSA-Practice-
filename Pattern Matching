@@ -1,0 +1,40 @@
+class Solution {
+  public:
+    vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
+      
+      for(int i=0;i<words.size();i++)
+      {
+        map<char,char> check,check1;
+        for(int j=0;j<words[i].size();j++)
+        {
+          map<char,char>::iterator itr = check.find(words[i][j]),itr1 = check1.find(pattern[j]);
+          
+          if(itr!=check.end())
+          {
+            if(itr->second != pattern[j])
+            {
+              words.erase(words.begin()+i);
+              i=-1;
+              break;
+            }
+          }
+          else if(itr1 != check1.end())
+          {
+            if(itr1->second != words[i][j])
+            {
+              words.erase(words.begin()+i);
+              i=-1;
+              break;
+            }
+          }
+          else
+          {
+          check.insert(pair<char,char>(words[i][j],pattern[j]));
+          check1.insert(pair<char,char>(pattern[j],words[i][j]));
+          }
+        }
+      }
+      
+      return words;
+    }
+};
